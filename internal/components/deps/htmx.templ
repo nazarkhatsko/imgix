@@ -1,0 +1,9 @@
+package deps
+
+var htmxHandler = templ.NewOnceHandle()
+
+templ HTMX() {
+	@htmxHandler.Once() {
+		<script src="/packages/htmx/js/htmx.min.js"></script>
+	}
+}

@@ -1,0 +1,9 @@
+package deps
+
+var jqueryHandler = templ.NewOnceHandle()
+
+templ JQuery() {
+	@jqueryHandler.Once() {
+		<script src="/packages/jquery/js/jquery.min.js"></script>
+	}
+}

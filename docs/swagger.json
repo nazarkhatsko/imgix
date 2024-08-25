@@ -1,0 +1,15 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "This is a sample server Petstore server.",
+        "title": "IMGIX Swagger API",
+        "contact": {},
+        "license": {
+            "name": "MIT",
+            "url": "http://github.com/nazarkhatsko/imgix/LICENSE"
+        },
+        "version": "1.0"
+    },
+    "basePath": "/api/v1",
+    "paths": {}
+}

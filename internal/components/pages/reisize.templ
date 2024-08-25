@@ -1,0 +1,21 @@
+package pages
+
+import (
+	"imgix/internal/components/layouts"
+	"imgix/internal/components/ui"
+)
+
+type ResizeOptions struct {
+	AppName  string
+	PageName string
+}
+
+templ Resize(options ResizeOptions) {
+	@layouts.App() {
+		@ui.Navbar(ui.NavbarOptions{
+			AppName:  options.AppName,
+			PageName: options.PageName,
+		})
+		@ui.MentionOfAuthor()
+	}
+}

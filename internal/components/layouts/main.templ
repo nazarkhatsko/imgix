@@ -1,0 +1,28 @@
+package layouts
+
+import "imgix/internal/components/deps"
+
+type MainOptions struct {
+	Lang  string
+	Title string
+	Embed templ.Component
+}
+
+templ Main(options MainOptions) {
+	<!DOCTYPE html>
+	<html lang="{ options.Lang }">
+		<head>
+			<meta charset="utf-8"/>
+			<meta name="viewport" content="width=device-width, initial-scale=1"/>
+			<title>{ options.Title }</title>
+			@deps.BootstrapIcons()
+			@deps.BootstrapCSS()
+		</head>
+		<body>
+			@options.Embed
+			@deps.BootstrapJS()
+			@deps.JQuery()
+			@deps.HTMX()
+		</body>
+	</html>
+}

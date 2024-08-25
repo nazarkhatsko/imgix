@@ -1,0 +1,18 @@
+version: "2"
+
+plugins:
+  - name: jsonb
+    process:
+      cmd: sqlc-gen-json
+
+sql:
+  - engine: postgresql
+    queries:
+      - ./queries/config.sql
+    schema:
+      - ./schemas/config.sql
+    gen:
+      go:
+        package: db
+        out: ../internal/db
+        sql_package: pgx/v5

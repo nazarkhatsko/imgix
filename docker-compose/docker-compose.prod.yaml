@@ -1,0 +1,14 @@
+services:
+  app:
+    build:
+      context: ${PROJECT_DIR}
+      target: builder_prod
+      dockerfile: ./docker/Dockerfile
+
+  redis:
+    ports:
+      - ${REDIS_PORT}:6379
+
+  db:
+    ports:
+      - ${DATABASE_PORT}:5432

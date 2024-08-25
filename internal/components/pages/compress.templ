@@ -1,0 +1,21 @@
+package pages
+
+import (
+	"imgix/internal/components/layouts"
+	"imgix/internal/components/ui"
+)
+
+type CompressOptions struct {
+	AppName  string
+	PageName string
+}
+
+templ Compress(options CompressOptions) {
+	@layouts.App() {
+		@ui.Navbar(ui.NavbarOptions{
+			AppName:  options.AppName,
+			PageName: options.PageName,
+		})
+		@ui.MentionOfAuthor()
+	}
+}

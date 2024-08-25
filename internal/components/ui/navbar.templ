@@ -1,0 +1,116 @@
+package ui
+
+import "imgix/internal/common/constants"
+
+type NavbarOptions struct {
+	AppName  string
+	PageName string
+}
+
+templ Navbar(options NavbarOptions) {
+	<nav class="navbar navbar-expand-lg bg-body-tertiary">
+		<div class="container">
+			<!-- Brand -->
+			<a class="navbar-brand" href="">
+				<img src="/assets/icons/favicon.png" alt="Logo" width="30" height="24" class="d-inline-block align-text-top"/>
+				{ options.AppName }
+			</a>
+			<!-- Toggle navigation -->
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<!-- Menu -->
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+					<li class="nav-item">
+						<a
+							class="nav-link active"
+							href="/welcome"
+							if options.PageName == constants.WELLCOME_PAGE_NAME {
+								aria-current="page"
+							}
+						>
+							Welcome
+						</a>
+					</li>
+					<li class="nav-item">
+						<a
+							class="nav-link"
+							href="/convert"
+							if options.PageName == constants.CONVERT_PAGE_NAME {
+								aria-current="page"
+							}
+						>
+							Convert
+						</a>
+					</li>
+					<li class="nav-item">
+						<a
+							class="nav-link"
+							href="/compress"
+							if options.PageName == constants.COMPRESS_PAGE_NAME {
+								aria-current="page"
+							}
+						>
+							Compress
+						</a>
+					</li>
+					<li class="nav-item">
+						<a
+							class="nav-link"
+							href="/resize"
+							if options.PageName == constants.RESIZE_PAGE_NAME {
+								aria-current="page"
+							}
+						>
+							Resize
+						</a>
+					</li>
+				</ul>
+			</div>
+			<!-- Links -->
+			<ul class="navbar-nav flex-row flex-wrap ms-md-auto">
+				<li class="nav-item col-6 col-lg-auto">
+					<a class="nav-link py-2 px-0 px-lg-2" href="https://github.com/nazarkhatsko/imgix" target="_blank" rel="noopener">
+						<i class="bi bi-github"></i>
+						<small class="d-lg-none ms-2">GitHub</small>
+					</a>
+				</li>
+				<li class="nav-item py-2 py-lg-1 col-12 col-lg-auto">
+					<div class="vr d-none d-lg-flex h-100 mx-lg-2"></div> // col-text-white
+					<hr class="d-lg-none my-2"/>
+					// text-white
+				</li>
+				<li class="nav-item dropdown">
+					<button class="btn btn-link nav-link py-2 px-0 px-lg-2 dropdown-toggle d-flex align-items-center" id="bd-theme" type="button" aria-expanded="false" data-bs-toggle="dropdown" data-bs-display="static" aria-label="Toggle theme (dark)">
+						<i class="bi bi-moon-stars-fill"></i>
+						<span class="d-lg-none ms-2" id="bd-theme-text">Toggle theme</span>
+					</button>
+					<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="bd-theme-text">
+						<li>
+							<button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="light" aria-pressed="true">
+								<i class="bi bi-sun-fill me-2"></i>
+								Light
+								<i class="bi bi-check2 ms-auto"></i>
+							</button>
+						</li>
+						<li>
+							<button type="button" class="dropdown-item d-flex align-items-center active" data-bs-theme-value="dark" aria-pressed="false">
+								<i class="bi bi-moon-stars-fill me-2"></i>
+								Dark
+								<i class="bi bi-check2 ms-auto d-none"></i>
+							</button>
+						</li>
+						<li>
+							<button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="auto" aria-pressed="false">
+								<i class="bi bi-circle-half me-2"></i>
+								Auto
+								<i class="bi bi-check2 ms-auto d-none"></i>
+							</button>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</nav>
+}

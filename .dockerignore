@@ -1,0 +1,28 @@
+# Git-related files
+.git
+
+# Configuration files
+.commitlintrc*
+.editorconfig
+.vscode
+
+# OS-specific files
+.DS_Store
+
+# Logs
+*.log
+logs
+
+# Docker-related files
+.dockerignore
+*docker-compose*
+*Dockerfile*
+.docker
+
+# Coverage and data directories
+coverage
+data
+
+# License and documentation
+LICENSE
+README.md

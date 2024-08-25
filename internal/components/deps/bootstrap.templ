@@ -1,0 +1,23 @@
+package deps
+
+var bootstrapIconsHandler = templ.NewOnceHandle()
+var bootstrapCSSHandler = templ.NewOnceHandle()
+var bootstrapJSHandler = templ.NewOnceHandle()
+
+templ BootstrapIcons() {
+	@bootstrapIconsHandler.Once() {
+		<link href="/packages/bootstrap-icons/bootstrap-icons.css" rel="stylesheet"/>
+	}
+}
+
+templ BootstrapCSS() {
+	@bootstrapCSSHandler.Once() {
+		<link href="/packages/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+	}
+}
+
+templ BootstrapJS() {
+	@bootstrapJSHandler.Once() {
+		<script src="/packages/bootstrap/js/bootstrap.bundle.min.js"></script>
+	}
+}

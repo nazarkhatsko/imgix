@@ -1,0 +1,84 @@
+version: "3"
+
+dotenv: [".env", "{{.ENV}}/.env.", "{{.HOME}}/.env"]
+
+vars:
+  BASE_DOCKER_COMPOSE_FILE: ./docker-compose/docker-compose.yaml
+
+tasks:
+  build:
+    aliases: [b]
+    desc: "Generate code from templates, generate SQL code, and compile the Go application."
+    method: checksum
+    sources:
+      - "./**/*.go"
+      - "./**/*.sql"
+      - "./**/*.templ"
+    generates:
+      - ./tmp/main
+    cmds:
+      - templ generate
+      - sqlc generate -f ./database/sqlc.yaml
+      - swag init -g ./cmd/main.go
+      - go build -o ./tmp/main ./cmd/main.go
+
+  test:
+    aliases: [t]
+    desc: "Run unit tests for the Go application."
+    cmds:
+      - go test ./cmd/main.go
+
+  format:
+    aliases: [f, fmt]
+    desc: "Format the Go source code to match the official Go formatting standards."
+    cmds:
+      - go fmt ./cmd/main.go
+      - templ fmt .
+
+  lint:
+    aliases: [l]
+    desc: "Run linters on the Go source code to identify potential issues."
+    cmds:
+      - golangci-lint run
+
+  depth:
+    aliases: [d]
+    desc: "Analyze the dependency tree of the Go application."
+    cmds:
+      - depth ./cmd
+
+  start:
+    aliases: [s]
+    desc: "Start the compiled Go application from the generated binary."
+    cmds:
+      - ./tmp/main
+
+  start:dev:
+    aliases: [s:dev]
+    desc: "Start the Go application in development mode with live reloading using Air."
+    cmds:
+      - air
+
+  docker:start:*:
+    desc: "Start Docker services using Docker Compose files based on the specified environment mode."
+    vars:
+      ENV_MODE: "{{index .MATCH 0}}"
+      ENV_DOCKER_COMPOSE_FILE: ./docker-compose/docker-compose.{{ .ENV_MODE }}.yaml
+    cmds:
+      - docker compose -f {{ .BASE_DOCKER_COMPOSE_FILE }} -f {{ .ENV_DOCKER_COMPOSE_FILE }} up --build -d
+
+  docker:stop:*:
+    desc: "Stop Docker services and remove any orphan containers using the specified Docker Compose files."
+    vars:
+      ENV_MODE: "{{index .MATCH 0}}"
+      ENV_DOCKER_COMPOSE_FILE: ./docker-compose/docker-compose.{{ .ENV_MODE }}.yaml
+    cmds:
+      - docker compose -f {{ .BASE_DOCKER_COMPOSE_FILE }} -f {{ .ENV_DOCKER_COMPOSE_FILE }} down
+
+  docker:remove:*:
+    desc: "Fully clean up Docker environment by stopping services, removing orphans, volumes, and all associated images."
+    vars:
+      ENV_MODE: "{{index .MATCH 0}}"
+      ENV_DOCKER_COMPOSE_FILE: ./docker-compose/docker-compose.{{ .ENV_MODE }}.yaml
+    cmds:
+      - docker compose -f {{ .BASE_DOCKER_COMPOSE_FILE }} -f {{ .ENV_DOCKER_COMPOSE_FILE }} down --remove-orphans -v --rmi all
